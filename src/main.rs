@@ -1,31 +1,34 @@
-enum Color {
-    Rgb(i32, i32, i32),
-    Hsv(i32, i32, i32),
+trait Pilot {
+    fn fly(&self);
 }
 
-enum Message {
-    Quit,
-    Move { x: i32, y: i32 },
-    Write(String),
-    ChangeColor(Color),
+trait Wizard {
+    fn fly(&self);
 }
 
-struct Point {
-    x: i32,
-    y: i32
+struct Human;
+
+impl Pilot for Human {
+    fn fly(&self) {
+        println!("This is your captain speaking.");
+    }
+}
+
+impl Wizard for Human {
+    fn fly(&self) {
+        println!("Up!");
+    }
+}
+
+impl Human {
+    fn fly(&self) {
+        println!("*waving arms furiously*");
+    }
 }
 
 fn main() {
-    let msg = Message::ChangeColor(Color::Hsv(0, 160, 255));
-    let ((feet, inches), Point { x, y }) = ((3, 10), Point { x: 3, y: -10 });
-
-    match msg {
-        Message::ChangeColor(Color::Rgb(r, g, b)) => {
-            println!("Change color to red {r}, green {g}, and blue {b}");
-        }
-        Message::ChangeColor(Color::Hsv(h, s, v)) => {
-            println!("Change color to hue {h}, saturation {s}, value {v}")
-        }
-        _ => ()
-    }
+    let person = Human;
+    Pilot::fly(&person);
+    Wizard::fly(&person);
+    person.fly();
 }
